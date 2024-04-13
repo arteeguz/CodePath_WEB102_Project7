@@ -38,3 +38,11 @@ input[type=submit] {
 input[type=submit]:hover {
     border-color: #646cff;
 }
+
+.crewImage {
+    width: 180px; 
+    height: auto; 
+    display: block; /* Ensures the image is a block-level element to handle margins and centering correctly */
+    margin: auto; /* Centers the image horizontally in its container */
+}
+
