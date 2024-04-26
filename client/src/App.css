@@ -6,7 +6,6 @@
   color: white;
   justify-content: center;
   /* background-color: rgba(0, 0, 0, 0.962); */
-  padding:20px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -46,4 +45,8 @@ button {
 }
 button:hover {
   border-color: #646cff;
+}
+
+h1 {
+  background-color: lightgreen;
 }

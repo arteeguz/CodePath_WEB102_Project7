@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react'; // Added useState import
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { supabase } from '../client'
 import './EditPost.css'
 
-const EditPost = ({ data }) => {
+const EditPost = () => { // Remove 'data' prop
     const { id } = useParams();
-    const [post, setPost] = useState({ id: null, name: "", speed: "", color: "" });
+    const [post, setPost] = useState({ id: null, author: "", description: "", category: "", price: 0 });
 
     useEffect(() => {
         const fetchData = async () => {
             const { data: postData, error } = await supabase
-                .from('crewmates')
+                .from('posts') // Change table name from 'crewmates' to 'posts'
                 .select("*")
                 .eq('id', id)
                 .single();
@@ -33,8 +33,8 @@ const EditPost = ({ data }) => {
     const updatePost = async (event) => {
         event.preventDefault();
         await supabase
-            .from('crewmates')
-            .update({ name: post.name, speed: post.speed, color: post.color })
+            .from('posts') // Change table name from 'crewmates' to 'posts'
+            .update({ author: post.author, description: post.description, category: post.category, price: post.price })
             .eq('id', id);
 
         window.location = "/";
@@ -42,7 +42,7 @@ const EditPost = ({ data }) => {
 
     const deletePost = async () => {
         await supabase
-            .from('crewmates')
+            .from('posts') // Change table name from 'crewmates' to 'posts'
             .delete()
             .eq('id', id);
 
@@ -52,16 +52,21 @@ const EditPost = ({ data }) => {
     return (
         <div>
             <form onSubmit={updatePost}>
-                <label htmlFor="name">Name:</label>
-                <input type="text" id="name" name="name" value={post.name} onChange={handleChange} /><br/>
-                <label htmlFor="speed">Speed:</label>
-                <input type="text" id="speed" name="speed" value={post.speed} onChange={handleChange} /><br/>
-                <label htmlFor="color">Color:</label>
-                <select id="color" name="color" value={post.color} onChange={handleChange}>
-                    {["Red", "Blue", "Green", "Yellow", "Purple"].map(color => (
-                        <option key={color} value={color}>{color}</option>
-                    ))}
+                <label htmlFor="author">Author:</label> {/* Change label to 'Author' */}
+                <input type="text" id="author" name="author" value={post.author} onChange={handleChange} /><br/>
+                <label htmlFor="description">Description:</label> {/* Change label to 'Description' */}
+                <input type="text" id="description" name="description" value={post.description} onChange={handleChange} /><br/>
+                <label htmlFor="category">Category:</label> {/* Change label to 'Category' */}
+                <select id="category" name="category" value={post.category} onChange={handleChange}>
+                    <option value="thread">Thread</option>
+                    <option value="listing">Listing</option>
                 </select><br/>
+                {post.category === 'listing' && (
+                    <>
+                        <label htmlFor="price">Price:</label>
+                        <input type="number" id="price" name="price" value={post.price} onChange={handleChange} /><br/>
+                    </>
+                )}
                 <input type="submit" value="Submit" />
                 <button type="button" onClick={deletePost}>Delete</button>
             </form>

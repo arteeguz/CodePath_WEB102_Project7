@@ -1,46 +1,83 @@
 import React, { useState } from 'react';
 import './CreatePost.css';
-
-// Importing supabase to interact with the database
 import { supabase } from '../client.js';
 
 const CreatePost = () => {
-    const [post, setPost] = useState({ name: "", speed: "", color: "Red" });  // Default color set to 'Red'
+    const [post, setPost] = useState({ author: "", description: "", category: "thread", price: 0, image_url: null });
+    const [uploading, setUploading] = useState(false);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
         setPost(prev => ({ ...prev, [name]: value }));
     };
 
+    const handleImageUpload = async (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+    
+        setUploading(true);
+    
+        try {
+            // Upload file to Supabase storage
+            const { data, error } = await supabase.storage.from('listing').upload(file.name, file);
+            if (error) {
+                throw error;
+            }
+            
+            const imageUrl = data.Key;
+            setPost(prev => ({ ...prev, image_url : imageUrl }));
+        } catch (error) {
+            console.error('Error uploading image:', error.message);
+            // Handle error (e.g., display error message to user)
+        } finally {
+            setUploading(false);
+        }
+    };
+
     const createPost = async (event) => {
         event.preventDefault();
+        console.log('Form submitted');
+    
         const { data, error } = await supabase
-            .from('crewmates')
-            .insert([post]);  // Ensure this is an array of objects
-
+            .from('posts')
+            .insert([post]);
+    
         if (error) {
             console.error('Error:', error);
         } else {
-            window.location = "/";  // Redirect to home to see all posts
+            console.log('Post created successfully');
+            window.location = "/";
         }
     };
+    
 
     return (
         <div>
             <form onSubmit={createPost}>
-                <label htmlFor="name">Name:</label>
-                <input type="text" id="name" name="name" value={post.name} onChange={handleChange} /><br/>
-                <label htmlFor="speed">Speed:</label>
-                <input type="text" id="speed" name="speed" value={post.speed} onChange={handleChange} /><br/>
+                <label htmlFor="author">Author:</label>
+                <input type="text" id="author" name="author" value={post.author} onChange={handleChange} /><br/>
+                <label htmlFor="description">Description:</label>
+                <input type="text" id="description" name="description" value={post.description} onChange={handleChange} /><br/>
                 <fieldset>
-                    <legend>Color</legend>
-                    {["Red", "Blue", "Green", "Yellow", "Purple"].map((color) => (
-                        <label key={color}>
-                            <input type="radio" name="color" value={color} checked={post.color === color} onChange={handleChange} />
-                            {color}
-                        </label>
-                    ))}
+                    <legend>Category</legend>
+                    <label>
+                        <input type="radio" name="category" value="thread" checked={post.category === 'thread'} onChange={handleChange} />
+                        Thread
+                    </label>
+                    <label>
+                        <input type="radio" name="category" value="listing" checked={post.category === 'listing'} onChange={handleChange} />
+                        Listing
+                    </label>
                 </fieldset>
+                {post.category === 'listing' && (
+                    <>
+                        <label htmlFor="price">Price:</label>
+                        <input type="number" id="price" name="price" value={post.price} onChange={handleChange} /><br/>
+                        <label htmlFor="image">Upload Image:</label>
+                        <input type="file" id="image" name="image" accept="image/*" onChange={handleImageUpload} /><br/>
+                        {uploading && <p>Uploading image...</p>}
+                    </>
+                )}
                 <input type="submit" value="Submit" />
             </form>
         </div>

@@ -1,48 +1,57 @@
-input {
-    margin-top: 10px;
-    width: 100%;
-    height: 45px;
-    border-radius: 8px;
-    border: 1px solid transparent;
-    font-size: 20px;
-    padding-left: 10px;
-}
-
-label {
-    font-size: 20px;
-}
-
-textarea {
-    border-radius: 8px;
-    width: 100%;
-    border: 1px solid transparent;
-    font-size: 20px;
-}
-
-input[type=submit] {
-    width: 100%;
-    height: 50px;
-    cursor: pointer;
-    border-radius: 8px;
-    border: 1px solid transparent;
-    font-size: 20px;
-    font-weight: 500;
-    font-family: inherit;
-    background-color: #1a1a1a;
-    color:white;
-    cursor: pointer;
-    transition: border-color 0.25s;
-    margin-top: 20px;
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    margin-bottom: 50px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
   }
 
-input[type=submit]:hover {
-    border-color: #646cff;
+label,
+input,
+select {
+    font-size: 24px; 
+    color: #333; 
 }
 
-.crewImage {
-    width: 180px; 
-    height: auto; 
-    display: block; /* Ensures the image is a block-level element to handle margins and centering correctly */
-    margin: auto; /* Centers the image horizontally in its container */
-}
-
+  input[type='text'],
+  input[type='number'],
+  select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  input[type='file'] {
+    margin-top: 10px;
+    color: #333;
+  }
+  
+  input[type='submit'] {
+    background-color: #6fad6f;
+    color: #fff;
+    padding: 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px; 
+    padding: 15px 30px;
+  }
+  
+  input[type='submit']:hover {
+    background-color: #5e9c5e;
+  }
+  
+  p {
+    margin-top: 5px;
+    color: #555;
+  }
+  
+  legend {
+    color: black;
+  }

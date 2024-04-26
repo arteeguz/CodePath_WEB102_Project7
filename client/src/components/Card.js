@@ -3,8 +3,7 @@ import { useState } from 'react'
 import './Card.css'
 import more from './more.png'
 import { Link } from 'react-router-dom'
-import crewImage from '../Photos/crew.png';  // Importing the image
-
+import postImage from '../Photos/crew.png';
 
 const Card = (props) => {
   const [count, setCount] = useState(0);
@@ -13,12 +12,13 @@ const Card = (props) => {
   return (
       <div className="Card" style={{ borderColor: props.color }}>
           <Link to={'edit/' + props.id}><img className="moreButton" alt="edit button" src={more} /></Link>
-          <Link to={'/crewmate/' + props.id}>  {/* Link to the crewmate details page */}
-            <img src={crewImage} alt="Crewmate" className="crewImage"/>  {/* Displaying the crew image */}
+          <Link to={'/post/' + props.id}>  {/* Link to the post details page */}
+            <img src={postImage} alt="Post" className="postImage"/>  {/* Displaying the post image */}
           </Link>
-          <h2 className="title">{props.name}</h2>
-          <h3 className="author">Speed: {props.speed}</h3>
-          <p className="description">Color: {props.color}</p>
+          <h2 className="name">Posted by: {props.author}</h2> {/* Change props.name to props.author */}
+          <h3 className="description">Description: {props.description}</h3> {/* Change props.speed to props.description */}
+          <p className="category">Category: {props.category}</p> {/* Display category */}
+          {props.category === 'listing' && <p className="price">Price: ${props.price}</p>} {/* Display price only if category is 'listing' */}
           <button className="betButton" onClick={updateCount}>👍 Like Count: {count}</button>
       </div>
   );

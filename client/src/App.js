@@ -5,45 +5,37 @@ import ReadPosts from './pages/ReadPosts'
 import CreatePost from './pages/CreatePost'
 import EditPost from './pages/EditPost'
 import { Link } from 'react-router-dom'
-import CrewmateDetails from './pages/CrewmateDetails'; 
-
+import PostDetails from './pages/PostDetails';
+import Footer from './components/Footer';  
 
 const App = () => {
-  
-  const descr = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'
-
-  const posts = [
-     
-  ]
- 
-
-  // Sets up routes
-  let element = useRoutes([
+  const element = useRoutes([
     {
       path: "/",
-      element:<ReadPosts data={posts}/>
+      element:<ReadPosts/>
     },
     {
       path:"/edit/:id",
-      element: <EditPost data={posts} />
+      element: <EditPost />
     },
     {
       path:"/new",
       element: <CreatePost />
     },
-    { path: '/crewmate/:id', 
-      element: <CrewmateDetails /> 
+    { path: '/post/:id', 
+      element: <PostDetails  /> 
     }
   ]);
 
   return (
     <div className="App">
       <div className="header">
-        <h1>ASSEMBLE YOUR CREW</h1>
-        <Link to="/"><button className="headerBtn">Explore crewmates 🔍</button></Link>
-        <Link to="/new"><button className="headerBtn">Add crewmate 🏆</button></Link>
+        <h1>Neighborhood Threads & Listings</h1> {/* Updated title */}
+        <Link to="/"><button className="headerBtn">Home</button></Link> {/* Updated button label */}
+        <Link to="/new"><button className="headerBtn">New Post</button></Link> {/* Updated button label */}
       </div>
       {element}
+      <Footer /> 
     </div>
   );
 }

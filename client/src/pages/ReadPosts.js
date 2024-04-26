@@ -1,35 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import Card from '../components/Card';
-import { supabase } from '../client'; // Import supabase
+import { supabase } from '../client'; 
 
 const ReadPosts = () => {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        // Asynchronously fetch posts from the database
         const fetchPosts = async () => {
             const { data } = await supabase
-                .from('crewmates')
+                .from('posts') // Change table name from 'crewmates' to 'posts'
                 .select();
-            setPosts(data); // Update the posts state with fetched data
+            setPosts(data);
         };
 
-        fetchPosts(); // Call the fetchPosts function
-    }, []); // Dependency array is empty, so this runs once on mount
+        fetchPosts();
+    }, []);
 
     return (
         <div className="ReadPosts">
             {
                 posts && posts.length > 0 ?
-                posts.map((post, index) => 
+                posts.map((post) => 
                    <Card 
-                       key={post.id} // Added key for list rendering
+                       key={post.id} 
                        id={post.id} 
-                       name={post.name} 
-                       speed={post.speed} 
-                       color={post.color}
+                       author={post.author} 
+                       description={post.description} 
+                       category={post.category} 
+                       price={post.price} 
                    />
-                ) : <h2>{'ඞ You don not have any crewmates ඞ'}</h2>
+                ) : <h2>You don't have any posts.</h2>
             }
         </div>  
     );
