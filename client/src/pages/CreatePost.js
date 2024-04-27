@@ -1,3 +1,4 @@
+// CreatePost.js
 import React, { useState } from 'react';
 import './CreatePost.css';
 import { supabase } from '../client.js';
@@ -19,21 +20,23 @@ const CreatePost = () => {
     
         try {
             // Upload file to Supabase storage
-            const { data, error } = await supabase.storage.from('listing').upload(file.name, file);
+            const { data, error } = await supabase.storage.from('listings').upload(file.name, file);
             if (error) {
                 throw error;
             }
-            
-            const imageUrl = data.Key;
-            setPost(prev => ({ ...prev, image_url : imageUrl }));
+    
+            console.log('Upload response:', data); // Log the data object
+            const imageUrl = data.path; // Retrieve the path from the upload response
+            // Construct the image URL using the public URL of the storage bucket
+            const publicUrl = `https://yamyrkqwwnamalezwryc.supabase.co/storage/v1/object/public/listings/${imageUrl}`;
+            setPost(prev => ({ ...prev, image_url: publicUrl }));
         } catch (error) {
             console.error('Error uploading image:', error.message);
-            // Handle error (e.g., display error message to user)
         } finally {
             setUploading(false);
         }
     };
-
+    
     const createPost = async (event) => {
         event.preventDefault();
         console.log('Form submitted');
@@ -85,3 +88,4 @@ const CreatePost = () => {
 }
 
 export default CreatePost;
+

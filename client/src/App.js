@@ -30,9 +30,9 @@ const App = () => {
   return (
     <div className="App">
       <div className="header">
-        <h1>Neighborhood Threads & Listings</h1> {/* Updated title */}
-        <Link to="/"><button className="headerBtn">Home</button></Link> {/* Updated button label */}
-        <Link to="/new"><button className="headerBtn">New Post</button></Link> {/* Updated button label */}
+        <h1>Neighborhood Threads & Listings</h1>
+        <Link to="/"><button className="headerBtn">Home</button></Link>
+        <Link to="/new"><button className="headerBtn">New Post</button></Link>
       </div>
       {element}
       <Footer /> 

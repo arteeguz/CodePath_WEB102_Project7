@@ -1,10 +1,4 @@
-/* .ReadPosts {
-    display: grid;
-    grid-auto-flow: row;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
-}
- */
+
  .ReadPosts {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));

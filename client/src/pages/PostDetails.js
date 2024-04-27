@@ -1,15 +1,17 @@
+// PostDetails.js
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { supabase } from '../client';  
+import './PostDetails.css'
 
-const PostDetails = () => { // Change component name to PostDetails
+const PostDetails = () => {
     const { id } = useParams();
-    const [post, setPost] = useState(null); // Change variable name to 'post'
+    const [post, setPost] = useState(null);
 
     useEffect(() => {
-        const fetchPost = async () => { // Change function name to 'fetchPost'
+        const fetchPost = async () => {
             const { data, error } = await supabase
-                .from('posts') // Change table name from 'crewmates' to 'posts'
+                .from('posts')
                 .select("*")
                 .eq('id', id)
                 .single();
@@ -30,10 +32,10 @@ const PostDetails = () => { // Change component name to PostDetails
 
     return (
         <div>
-            <h1>Post: {post.author}</h1> {/* Change 'Crewmate' to 'Post' */}
-            <p>Description: {post.description}</p> {/* Display description */}
-            <p>Category: {post.category}</p> {/* Display category */}
-            {post.category === 'listing' && <p>Price: ${post.price}</p>} {/* Display price only if category is 'listing' */}
+            <h1>Post: {post.author}</h1>
+            <p>Description: {post.description}</p>
+            <p>Category: {post.category}</p>
+            {post.category === 'listing' && <p>Price: ${post.price}</p>}
         </div>
     );
 };

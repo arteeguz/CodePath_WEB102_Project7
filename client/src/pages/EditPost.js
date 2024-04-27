@@ -1,16 +1,17 @@
+// EditPost.js
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { supabase } from '../client'
 import './EditPost.css'
 
-const EditPost = () => { // Remove 'data' prop
+const EditPost = () => {
     const { id } = useParams();
     const [post, setPost] = useState({ id: null, author: "", description: "", category: "", price: 0 });
 
     useEffect(() => {
         const fetchData = async () => {
             const { data: postData, error } = await supabase
-                .from('posts') // Change table name from 'crewmates' to 'posts'
+                .from('posts')
                 .select("*")
                 .eq('id', id)
                 .single();
@@ -33,7 +34,7 @@ const EditPost = () => { // Remove 'data' prop
     const updatePost = async (event) => {
         event.preventDefault();
         await supabase
-            .from('posts') // Change table name from 'crewmates' to 'posts'
+            .from('posts')
             .update({ author: post.author, description: post.description, category: post.category, price: post.price })
             .eq('id', id);
 
@@ -42,7 +43,7 @@ const EditPost = () => { // Remove 'data' prop
 
     const deletePost = async () => {
         await supabase
-            .from('posts') // Change table name from 'crewmates' to 'posts'
+            .from('posts')
             .delete()
             .eq('id', id);
 
@@ -52,11 +53,11 @@ const EditPost = () => { // Remove 'data' prop
     return (
         <div>
             <form onSubmit={updatePost}>
-                <label htmlFor="author">Author:</label> {/* Change label to 'Author' */}
+                <label htmlFor="author">Author:</label>
                 <input type="text" id="author" name="author" value={post.author} onChange={handleChange} /><br/>
-                <label htmlFor="description">Description:</label> {/* Change label to 'Description' */}
+                <label htmlFor="description">Description:</label>
                 <input type="text" id="description" name="description" value={post.description} onChange={handleChange} /><br/>
-                <label htmlFor="category">Category:</label> {/* Change label to 'Category' */}
+                <label htmlFor="category">Category:</label>
                 <select id="category" name="category" value={post.category} onChange={handleChange}>
                     <option value="thread">Thread</option>
                     <option value="listing">Listing</option>

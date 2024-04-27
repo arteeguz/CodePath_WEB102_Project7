@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Card from '../components/Card';
 import { supabase } from '../client'; 
+import './ReadPosts.css';
 
 const ReadPosts = () => {
     const [posts, setPosts] = useState([]);
@@ -8,7 +9,7 @@ const ReadPosts = () => {
     useEffect(() => {
         const fetchPosts = async () => {
             const { data } = await supabase
-                .from('posts') // Change table name from 'crewmates' to 'posts'
+                .from('posts')
                 .select();
             setPosts(data);
         };
@@ -28,6 +29,7 @@ const ReadPosts = () => {
                        description={post.description} 
                        category={post.category} 
                        price={post.price} 
+                       image_url={post.image_url} // Pass image_url prop here
                    />
                 ) : <h2>You don't have any posts.</h2>
             }
